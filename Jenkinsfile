@@ -1,7 +1,7 @@
 // Jenkinsfile for k8s-liveness Python package
 // Copyright 2020 Hewlett Packard Enterprise Development LP
  
-@Library('dst-shared@master') _
+@Library('dst-shared@release/shasta-1.4') _
 
 pipeline {
     agent {
