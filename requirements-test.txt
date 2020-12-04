@@ -1,0 +1,9 @@
+-c constraints.txt
+
+fixtures
+mock
+pytest
+pytest-cov
+pycodestyle
+pylint
+
