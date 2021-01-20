@@ -1,5 +1,5 @@
 // Jenkinsfile for k8s-liveness Python package
-// Copyright 2020 Hewlett Packard Enterprise Development LP
+// Copyright 2020-2021 Hewlett Packard Enterprise Development LP
  
 @Library('dst-shared@master') _
 
@@ -34,6 +34,27 @@ pipeline {
     }
 
     stages {
+        stage('Push to github') {
+            when { allOf {
+                expression { BRANCH_NAME ==~ /(bugfix\/.*|feature\/.*|hotfix\/.*|master|release\/.*)/ }
+            }}
+            steps {
+                container('cms-k8s-livenesss-cont') {
+                    sh """
+                        apk add --no-cache bash curl jq git openssl
+                    """
+                    script {
+                        pushToGithub(
+                            githubRepo: "Cray-HPE/k8s-liveness",
+                            pemSecretId: "githubapp-stash-sync",
+                            githubAppId: "91129",
+                            githubAppInstallationId: "13313749"
+                        )
+                    }
+                }
+            }
+        }
+
         stage('Build Package') {
             steps {
                 container('cms-k8s-livenesss-cont') {
