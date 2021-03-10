@@ -1,4 +1,4 @@
-# Copyright 2021, Hewlett Packard Enterprise Development LP
+# Copyright 2020-2021, Hewlett Packard Enterprise Development LP
 '''
 A set of routines for creating or reading from an existing timestamp file.
 Created on April 27, 2020
