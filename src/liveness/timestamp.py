@@ -52,11 +52,20 @@ class Timestamp(object):
         the value; instead it reads it each time the property is accessed.
         """
         try:
-            with open(self.path, 'r') as timestamp_file:
-                return datetime.fromtimestamp(float(timestamp_file.read().strip()))
-        except FileNotFoundError:
-            LOGGER.warning("Timestamp never intialized to '%s'" % (self.path))
-            return datetime.fromtimestamp(0)
+            try:
+                with open(self.path, 'r') as timestamp_file:
+                    return datetime.fromtimestamp(float(timestamp_file.read().strip()))
+            except FileNotFoundError:
+                LOGGER.warning("Timestamp never intialized to '%s'" % (self.path))
+                return datetime.fromtimestamp(0)
+        except ValueError:
+            # CASMCMS-6856: There is an edgecase where backgrounded writes of a timestamp
+            # occur between a new file descriptor being opened and written to; in this
+            # scenario, the new file is created but has not been written to. As a result,
+            # conversion to a float creates a ValueError. When this happens, we know that
+            # the timestamp is currently being written, so simply returning the current
+            # timestamp is acceptable.
+            return datetime.datetime()
 
     @property
     def age(self):
