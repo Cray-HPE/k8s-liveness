@@ -16,14 +16,14 @@ setuptools.setup(
     install_requires=[
       'liveness',
     ],
-    author="Cray/HPE Inc",
+    author="Hewlett Packard Enterprise Development LP",
     author_email="cray-oss@hpe.com",
     description="Library for simplifying liveness checks for python based infrastructure",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Cray-HPE/k8s-liveness",
     download_url="https://github.com/user/reponame/archive/v_1.1.2.tar.gz",
-    keywords="Cray/HPE IMS",
+    keywords="Cray/HPE Kubernetes Liveness Helm",
     classifiers=(
           'Development Status :: 5 - Stable',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
     'Intended Audience :: Developers',      # Define that your audience are developers

@@ -6,23 +6,17 @@ The base class, Timestamp, is intended to be inherited. Each project implementat
 
 ## Usage
 
-This entrypoint is used to determine if this service is still active/alive
-from a kubernetes liveness probe perspective.
+This entrypoint is used to determine if this service is still active/alive from a kubernetes liveness probe perspective.
 
-This service is deemed to be 'alive' and healthy if the
-main loop has executed relatively recently. The period of time for how frequently
-the agent checks for operational work is defined as a function of event frequency from
-kubernetes, so this liveness probe needs a larger than normal window to account for
-periods of time without a recent liveness cycle.
+This service is deemed to be 'alive' and healthy if the main loop has executed relatively recently. The period of time for how frequently the agent checks for operational work is defined as a function of event frequency from kubernetes, so this liveness probe needs a larger than normal window to account for periods of time without a recent liveness cycle.
 
 ## Example
 
 See the example in [main](src/liveness/__main__.py)
 
-This main routine exists as an example; each project should implement their own main routine within their own liveness project. Then, a helm chart deployment may
-reference the projects newly created module by adding this helm chart snippet.
+This main routine exists as an example; each project should implement their own main routine within their own liveness project. Then, a helm chart deployment may reference the projects newly created module by adding this yaml snippet to your helm chart or PodSpec.
 
-### Helm Chart
+### Helm Chart or PodSpec
 
 ```yaml
       livenessProbe:
