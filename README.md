@@ -17,9 +17,10 @@ periods of time without a recent liveness cycle.
 
 ## Example
 
-This main routine exists as an example; each project should implement their own
-__main__ routine within their own liveness project. Then, a helm chart deployment may
-reference the projects newly created module by adding this helm chart snippet and python code.
+See the example in [main](src/liveness/__main__.py)
+
+This main routine exists as an example; each project should implement their own main routine within their own liveness project. Then, a helm chart deployment may
+reference the projects newly created module by adding this helm chart snippet.
 
 ### Helm Chart
 
