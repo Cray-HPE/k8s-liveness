@@ -22,13 +22,13 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Cray-HPE/k8s-liveness",
-    download_url="https://github.com/user/reponame/archive/v_1.1.2.tar.gz",
+    download_url="https://github.com/Cray-HPE/k8s-liveness/archive/liveness-1.1.2.tar.gz",
     keywords="Cray/HPE Kubernetes Liveness Helm",
     classifiers=(
-          'Development Status :: 5 - Stable',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
-    'Intended Audience :: Developers',      # Define that your audience are developers
-    'Topic :: Software Development :: Build Tools',
-    'License :: OSI Approved :: MIT License',   
-      'Programming Language :: Python :: 3.6',
+          'Development Status :: 5 - Stable',
+          'Intended Audience :: Developers',
+          'Topic :: Software Development :: Build Tools',
+          'License :: OSI Approved :: MIT License',   
+          'Programming Language :: Python :: 3.6',
     ),
 )
