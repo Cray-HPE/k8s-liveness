@@ -1,5 +1,4 @@
 // Jenkinsfile for k8s-liveness Python package
-// Copyright 2020-2021 Hewlett Packard Enterprise Development LP
  
 @Library('dst-shared@master') _
 
@@ -9,7 +8,7 @@ pipeline {
             label "cray-k8s-liveness"
             containerTemplate {
                 name "cms-k8s-livenesss-cont"
-                image "dtr.dev.cray.com/dst/cray-alpine3_build_environment:latest"
+                image "arti.dev.cray.com/internal-docker-master-local/cray-alpine3_build_environment:latest"
                 ttyEnabled true
                 command "cat"
             }
