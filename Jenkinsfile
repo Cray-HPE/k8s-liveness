@@ -40,7 +40,7 @@ pipeline {
             steps {
                 container('cms-k8s-livenesss-cont') {
                     sh """
-                        apk add --no-cache bash curl jq git openssl
+                        apk add --no-cache --virtual .gh-tools bash curl jq git openssl
                     """
                     script {
                         pushToGithub(
@@ -50,6 +50,38 @@ pipeline {
                             githubAppInstallationId: "13313749"
                         )
                     }
+                    sh "apk del .gh-tools"
+                }
+            }
+        }
+
+        stage('Install necessary tools') {
+            steps {
+                container('cms-k8s-livenesss-cont') {
+                    // Install rpm separately since we are going to remove it
+                    sh """
+                        apk add --no-cache --virtual .build-tools rpm
+                        apk add --no-cache --virtual .build-deps g++ python3-dev libffi-dev openssl-dev py3-pip bash curl
+                        apk add --no-cache --update python3 && \
+                        pip3 install --upgrade pip setuptools
+                        pip3 install wheel
+                    """
+                }
+            }
+        }
+
+        stage('Linting') {
+            steps {
+                container('cms-k8s-livenesss-cont') {
+                    sh "./runLint.sh"
+                }
+            }
+        }
+
+        stage('Remove tools needed only for prep and linting') {
+            steps {
+                container('cms-k8s-livenesss-cont') {
+                    sh "apk del .build-tools"
                 }
             }
         }
@@ -58,10 +90,6 @@ pipeline {
             steps {
                 container('cms-k8s-livenesss-cont') {
                     sh """
-                        apk add --no-cache --virtual .build-deps g++ python3-dev libffi-dev openssl-dev py3-pip bash curl
-                        apk add --no-cache --update python3 && \
-                        pip3 install --upgrade pip setuptools
-                        pip3 install wheel
                         python3 setup.py sdist bdist_wheel
                     """             
                 }
