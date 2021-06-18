@@ -32,7 +32,7 @@ setuptools.setup(
     name="liveness",
     version=version,
     package_dir = {'liveness': 'src/liveness'},
-    package_data = {'': '.version'},
+    package_data = {'': ['.version']},
     include_package_data=True,
     packages=['liveness'],
     install_requires=[
