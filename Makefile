@@ -1,6 +1,4 @@
-#!/usr/bin/env sh
-
-# Copyright 2020-2021 Hewlett Packard Enterprise Development LP
+# Copyright 2019-2021 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -22,8 +20,27 @@
 #
 # (MIT License)
 
-./install_cms_meta_tools.sh || exit 1
-./cms_meta_tools/copyright_license_check/copyright_license_check.sh || exit 1
-./cms_meta_tools/go_lint/go_lint.sh || exit 1
-rm -rf ./cms_meta_tools
-exit 0
+# If you wish to perform a local build, you will need to clone or copy the contents of the
+# cms-meta-tools repo to ./cms_meta_tools
+
+NAME ?= cray-k8s-liveness
+
+all : runbuildprep lint pymod
+pymod: pymod_build pymod_test
+
+runbuildprep:
+		./cms_meta_tools/scripts/runBuildPrep.sh
+
+lint:
+		./cms_meta_tools/scripts/runLint.sh
+
+pymod:
+		python3 setup.py sdist bdist_wheel
+
+pyunit:
+		pip3 install -r requirements.txt
+		pip3 install -r requirements-test.txt
+		python3 setup.py install
+		python3 tests/test_liveness.py
+		pycodestyle --config=.pycodestyle ./src/liveness || true
+		pylint ./src/liveness || true
