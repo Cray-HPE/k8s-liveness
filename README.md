@@ -3,6 +3,14 @@ This is the K8s-liveness project; it contains a basic library for creating and r
 
 The base class, Timestamp, is intended to be inherited. Each project implementation must specify its own maximum_age attribute within the defined subclass.
 
+## Build Helpers
+This repo uses some build helper scripts from the 
+[cms-meta-tools](https://github.com/Cray-HPE/cms-meta-tools) repo. See that repo for more details.
+
+## Local Builds
+If you wish to perform a local build, you will first need to clone or copy the contents of the
+cms-meta-tools repo to `./cms_meta_tools` in the same directory as the `Makefile`.
+
 ### Versioning
 Use [SemVer](http://semver.org/). The version is located in the [.version](.version) file.
 
