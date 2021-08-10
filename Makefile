@@ -34,10 +34,10 @@ runbuildprep:
 lint:
 		./cms_meta_tools/scripts/runLint.sh
 
-pymod:
+pymod_build:
 		python3 setup.py sdist bdist_wheel
 
-pyunit:
+pymod_test:
 		pip3 install -r requirements.txt
 		pip3 install -r requirements-test.txt
 		python3 setup.py install
