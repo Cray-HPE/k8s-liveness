@@ -1,4 +1,5 @@
-@Library('csm-shared-library') _
+@Library('cms-meta-tools') _
+@Library('csm-shared-library') __
 
 pipeline {
     agent {
@@ -15,7 +16,6 @@ pipeline {
     environment {
         NAME = "cray-k8s-liveness"
         DESCRIPTION = "Library for creating and referncing timestamps to determine if a piece of code is running or not, from a k8s perspective"
-        VERSION = sh(returnStdout: true, script: "head -1 .version").trim()
         IS_STABLE = getBuildIsStable()
     }
 
@@ -31,10 +31,16 @@ pipeline {
         }
 
         stage("Clone cms_meta_tools repo") {
-            steps { 
-                withCredentials([gitUsernamePassword(credentialsId: 'jenkins-algol60-cray-hpe-github-integration')]) {
-                    sh 'git clone --depth 1 --no-single-branch https://github.com/Cray-HPE/cms-meta-tools.git ./cms_meta_tools'
-                }            
+            steps {
+                // This function is defined in cms-meta-tools:vars/cloneCMSMetaTools.groovy
+                cloneCMSMetaTools()
+            }
+        }
+
+        stage("Set Versions") {
+            steps {
+                // This function is defined in cms-meta-tools:vars/setVersionFiles.groovy
+                setVersionFiles()
             }
         }
 
