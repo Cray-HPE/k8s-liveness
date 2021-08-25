@@ -15,6 +15,7 @@ pipeline {
     }
     environment {
         NAME = "cray-k8s-liveness"
+        PYMOD_NAME = "liveness"
         DESCRIPTION = "Library for creating and referncing timestamps to determine if a piece of code is running or not, from a k8s perspective"
         IS_STABLE = getBuildIsStable()
     }
@@ -62,7 +63,7 @@ pipeline {
         
         stage('Publish') {
             steps {
-                publishCsmPythonModules(module: env.NAME, isStable: env.IS_STABLE)
+                publishCsmPythonModules(module: env.PYMOD_NAME, isStable: env.IS_STABLE)
             }
         }
     }
