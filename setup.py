@@ -25,8 +25,7 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-with open('.version', 'r') as fh:
-    version = fh.read().strip()
+version = "@VERSION@"
 
 setuptools.setup(
     name="liveness",
