@@ -35,9 +35,9 @@ setuptools.setup(
     install_requires=[
       'liveness',
     ],
-    author="Cray Inc.",
-    author_email="sps@cray.com",
-    description="Library for simplifying liveness checks for Python-based infrastructure",
+    author="Hewlett Packard Enterprise Development LP",
+    author_email="help@hpe.com",
+    description="Simple liveness checks for Python-based apps running in Kubernetes",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Cray-HPE/k8s-liveness",
