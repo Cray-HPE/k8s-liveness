@@ -44,7 +44,8 @@ pymod_build:
 pymod_test:
 		pip3 install -r requirements.txt
 		pip3 install -r requirements-test.txt
-		python3 setup.py install
-		python3 tests/test_liveness.py
+		mkdir -p pymod_test
+		easy_install . --install_dir ${PWD}//pymod_test
+		PYTHONPATH=${PYTHONPATH}:${PWD}/pymod_test python3 tests/test_liveness.py
 		pycodestyle --config=.pycodestyle ./src/liveness || true
 		pylint ./src/liveness || true
