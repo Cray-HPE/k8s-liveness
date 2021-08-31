@@ -1,9 +1,15 @@
-===
-This is the K8s-liveness project; it contains a basic library for creating and referncing timestamps in order to determine if a piece of code is running or not, from a k8s perspective.
+# k8s-liveness
 
-The base class, Timestamp, is intended to be inherited. Each project implementation must specify its own maximum_age attribute within the defined subclass.
+This is the K8s-liveness project; it contains a basic library for creating
+and referncing timestamps in order to determine if a piece of code is running
+or not, from a k8s perspective.
+
+The base class, `Timestamp`, is intended to be inherited. Each project
+implementation must specify its own `maximum_age` attribute within the defined
+subclass.
 
 ## Build Helpers
+
 This repo uses some build helpers from the 
 [cms-meta-tools](https://github.com/Cray-HPE/cms-meta-tools) repo. See that repo for more details.
 
@@ -12,8 +18,8 @@ If you wish to perform a local build, you will first need to clone or copy the c
 cms-meta-tools repo to `./cms_meta_tools` in the same directory as the `Makefile`. When building
 on github, the cloneCMSMetaTools() function clones the cms-meta-tools repo into that directory.
 
-For a local build, you will also need to manually write the .version, .docker_version (if this repo
-builds a docker image), and .chart_version (if this repo builds a helm chart) files. When building
+For a local build, you will also need to manually write the `.version`, `.docker_version` (if this repo
+builds a docker image), and `.chart_version` (if this repo builds a helm chart) files. When building
 on github, this is done by the setVersionFiles() function.
 
 ## Versioning
