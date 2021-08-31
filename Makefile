@@ -26,13 +26,17 @@
 NAME ?= cray-k8s-liveness
 
 all : runbuildprep lint pymod
-pymod: pymod_build pymod_test
+pymod: pymod_prepare pymod_build pymod_test
 
 runbuildprep:
 		./cms_meta_tools/scripts/runBuildPrep.sh
 
 lint:
 		./cms_meta_tools/scripts/runLint.sh
+
+pymod_prepare:
+		pip3 install --upgrade pip setuptools
+		pip3 install wheel
 
 pymod_build:
 		python3 setup.py sdist bdist_wheel

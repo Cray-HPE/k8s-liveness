@@ -5,8 +5,7 @@ pipeline {
     agent {
         docker {
             label "metal-gcp-builder"
-            image "arti.dev.cray.com/dstbuildenv-docker-master-local/cray-alpine3_build_environment:latest"
-            args "-u root"
+            image "arti.dev.cray.com/dstbuildenv-docker-master-local/cray-sle15sp2_build_environment:latest"
         }
     }
     options {
@@ -21,16 +20,6 @@ pipeline {
     }
 
     stages {
-        stage("Install Necessary Tools") {
-            steps {
-                sh """
-                    apk add --no-cache --virtual .build-deps g++ python3-dev libffi-dev openssl-dev py3-pip bash curl make
-                    apk add --no-cache --update python3 && pip3 install --upgrade pip setuptools
-                    pip3 install wheel
-                """
-            }
-        }
-
         stage("Clone cms_meta_tools repo") {
             steps {
                 // This function is defined in cms-meta-tools:vars/cloneCMSMetaTools.groovy
@@ -52,7 +41,11 @@ pipeline {
         stage("Lint") {
             steps { sh "make lint" }
         }
-                
+         
+        stage('Prepare for Build') {
+            steps { sh "make pymod_prepare" }
+        }
+
         stage('Build Package') {
             steps { sh "make pymod_build" }
         }
