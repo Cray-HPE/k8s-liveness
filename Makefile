@@ -35,8 +35,7 @@ lint:
 		./cms_meta_tools/scripts/runLint.sh
 
 pymod_prepare:
-		pip3 install --upgrade pip setuptools
-		pip3 install wheel
+		pip3 install --upgrade pip setuptools wheel
 
 pymod_build:
 		python3 setup.py sdist bdist_wheel
@@ -45,7 +44,7 @@ pymod_test:
 		pip3 install -r requirements.txt
 		pip3 install -r requirements-test.txt
 		mkdir -p pymod_test
-		easy_install . --install_dir ${PWD}//pymod_test
+		python3 setup.py install --install-lib ${PWD}/pymod_test
 		PYTHONPATH=${PYTHONPATH}:${PWD}/pymod_test python3 tests/test_liveness.py
 		pycodestyle --config=.pycodestyle ./src/liveness || true
 		pylint ./src/liveness || true
