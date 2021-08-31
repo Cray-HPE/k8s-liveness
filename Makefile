@@ -26,7 +26,7 @@
 NAME ?= cray-k8s-liveness
 
 all : runbuildprep lint pymod
-pymod: pymod_build pymod_test
+pymod: pymod_prepare pymod_build pymod_test
 
 runbuildprep:
 		./cms_meta_tools/scripts/runBuildPrep.sh
@@ -34,13 +34,17 @@ runbuildprep:
 lint:
 		./cms_meta_tools/scripts/runLint.sh
 
+pymod_prepare:
+		pip3 install --upgrade pip setuptools wheel
+
 pymod_build:
 		python3 setup.py sdist bdist_wheel
 
 pymod_test:
 		pip3 install -r requirements.txt
 		pip3 install -r requirements-test.txt
-		python3 setup.py install
+		mkdir -p pymod_test
+		python3 setup.py install --user
 		python3 tests/test_liveness.py
 		pycodestyle --config=.pycodestyle ./src/liveness || true
 		pylint ./src/liveness || true
