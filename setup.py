@@ -25,11 +25,15 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-version = "@VERSION@"
+with open("gitInfo.txt", "r") as fh:
+    long_description += '\n' + fh.read()
+
+with open(".version", "r") as fh:
+    version_str = fh.read()
 
 setuptools.setup(
     name="liveness",
-    version=version,
+    version=version_str,
     package_dir = {'liveness': 'src/liveness'},
     packages=['liveness'],
     install_requires=[
@@ -42,7 +46,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/Cray-HPE/k8s-liveness",
     keywords="Cray",
-    classifiers=(
+    classifiers=[
       "Programming Language :: Python :: 3.6",
-    ),
+      "License :: OSI Approved :: MIT License"
+    ],
 )
