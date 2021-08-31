@@ -5,7 +5,7 @@ pipeline {
     agent {
         docker {
             label "metal-gcp-builder"
-            image "arti.dev.cray.com/dstbuildenv-docker-master-local/cray-sle15sp2_build_environment:latest"
+            image "arti.dev.cray.com/dstbuildenv-docker-master-local/cray-sle15sp3_build_environment:latest"
         }
     }
     options {
