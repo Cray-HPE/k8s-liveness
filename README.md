@@ -40,6 +40,11 @@ When making a new release branch:
     * Be sure to set the `.x` and `.y` files to the desired major and minor version number for this repo for this release. 
     * If an `update_external_versions.conf` file exists in this repo, be sure to update that as well, if needed.
 
+## Changelog
+
+See the [CHANGELOG](CHANGELOG.md) for changes. This file uses the [Keep A Changelog](https://keepachangelog.com)
+format.
+
 ### Copyright and License
 This project is copyrighted by Hewlett Packard Enterprise Development LP and is under the MIT
 license. See the [LICENSE](LICENSE) file for details.
