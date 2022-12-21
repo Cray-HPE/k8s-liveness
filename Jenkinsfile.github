@@ -37,7 +37,7 @@ pipeline {
     environment {
         NAME = "cray-k8s-liveness"
         PYMOD_NAME = "liveness"
-        DESCRIPTION = "Library for creating and referncing timestamps to determine if a piece of code is running or not, from a k8s perspective"
+        DESCRIPTION = "Library for creating and referencing timestamps to determine if a piece of code is running or not, from a k8s perspective"
         IS_STABLE = getBuildIsStable()
     }
 

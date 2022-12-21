@@ -77,7 +77,7 @@ class Timestamp(object):
             with open(self.path, 'r') as timestamp_file:
                 return datetime.fromtimestamp(float(timestamp_file.read().strip()))
         except FileNotFoundError:
-            LOGGER.warning("Timestamp never intialized to '%s'" % (self.path))
+            LOGGER.warning("Timestamp never initialized to '%s'" % (self.path))
             return datetime.fromtimestamp(0)
         except ValueError:
             # CASMCMS-6856: There is an edgecase where backgrounded writes of a timestamp
