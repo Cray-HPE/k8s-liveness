@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Spelling corrections.
 
+### Removed
+- Removed defunct files leftover from previous versioning system
+
 ## [1.4.1] - 2022-12-20
 ### Added
 - Add Artifactory authentication to Jenkinsfile
