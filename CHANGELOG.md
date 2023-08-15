@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Spelling corrections.
+- Disabled concurrent Jenkins builds on same branch/commit
+- Added build timeout to avoid hung builds
 
 ### Removed
 - Removed defunct files leftover from previous versioning system
