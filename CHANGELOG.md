@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Removed defunct files leftover from previous versioning system
 
+### Dependencies
+- Bump `tj-actions/changed-files` from 37 to 38 ([#18](https://github.com/Cray-HPE/k8s-liveness/pull/18))
+
 ## [1.4.1] - 2022-12-20
 ### Added
 - Add Artifactory authentication to Jenkinsfile
@@ -21,4 +24,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.4.0] - 2022-08-10
 ### Changed
 - Convert to gitflow/gitversion.
-
