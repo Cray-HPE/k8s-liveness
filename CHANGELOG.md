@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed defunct files leftover from previous versioning system
 
 ### Dependencies
-- Bump `tj-actions/changed-files` from 37 to 38 ([#18](https://github.com/Cray-HPE/k8s-liveness/pull/18))
+- Bump `tj-actions/changed-files` from 37 to 39 ([#18](https://github.com/Cray-HPE/k8s-liveness/pull/18), [#20](https://github.com/Cray-HPE/k8s-liveness/pull/20))
 - Bump `actions/checkout` from 3 to 4 ([#19](https://github.com/Cray-HPE/k8s-liveness/pull/19))
 
 ## [1.4.1] - 2022-12-20
