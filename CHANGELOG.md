@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed defunct files leftover from previous versioning system
 
 ### Dependencies
-- Bump `tj-actions/changed-files` from 37 to 39 ([#18](https://github.com/Cray-HPE/k8s-liveness/pull/18), [#20](https://github.com/Cray-HPE/k8s-liveness/pull/20))
+- Bump `tj-actions/changed-files` from 37 to 40 ([#18](https://github.com/Cray-HPE/k8s-liveness/pull/18), [#20](https://github.com/Cray-HPE/k8s-liveness/pull/20), [#22](https://github.com/Cray-HPE/k8s-liveness/pull/22))
 - Bump `actions/checkout` from 3 to 4 ([#19](https://github.com/Cray-HPE/k8s-liveness/pull/19))
 - Bump `stefanzweifel/git-auto-commit-action` from 4 to 5 ([#21](https://github.com/Cray-HPE/k8s-liveness/pull/21))
 
