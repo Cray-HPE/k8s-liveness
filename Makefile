@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2019-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2019-2022,2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -47,5 +47,5 @@ pymod_test:
 		mkdir -p pymod_test
 		python3 setup.py install --user
 		python3 tests/test_liveness.py
-		pycodestyle --config=.pycodestyle ./src/liveness || true
-		pylint ./src/liveness || true
+		python3 -m pycodestyle --config=.pycodestyle ./src/liveness || true
+		python3 -m pylint ./src/liveness || true

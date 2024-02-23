@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Disabled concurrent Jenkins builds on same branch/commit
 - Added build timeout to avoid hung builds
 
+### Fixed
+- Updated `Makefile` to allow `pycodestyle` and `pylint` to run.
+
 ### Removed
 - Removed defunct files leftover from previous versioning system
 
