@@ -2,7 +2,7 @@
  *
  *  MIT License
  *
- *  (C) Copyright 2021-2023 Hewlett Packard Enterprise Development LP
+ *  (C) Copyright 2021-2024 Hewlett Packard Enterprise Development LP
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -69,19 +69,20 @@ pipeline {
         stage("Lint") {
             steps { sh "make lint" }
         }
-         
-        stage('Prepare for Build') {
-            steps { sh "make pymod_prepare" }
+
+        stage('Build & Test') {
+            agent {
+                docker {
+                    args "-v /home/jenkins/.ssh:/home/jenkins/.ssh"
+                    reuseNode true
+                    image "artifactory.algol60.net/csm-docker/stable/csm-docker-sle-python:3.7"
+                }
+            }
+            steps {
+                sh "make pymod"
+            }
         }
 
-        stage('Build Package') {
-            steps { sh "make pymod_build" }
-        }
-
-        stage('Unit Tests') {
-            steps { sh "make pymod_test" }
-        }
-        
         stage('Publish') {
             steps {
                 publishCsmPythonModules(module: env.PYMOD_NAME, isStable: env.IS_STABLE)
