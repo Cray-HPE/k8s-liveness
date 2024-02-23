@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2022, 2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -21,12 +21,13 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #
-'''
+"""
 A set of routines for creating or reading from an existing timestamp file.
 Created on April 27, 2020
 
 @author: jsl
-'''
+"""
+
 import logging
 from datetime import datetime, timedelta
 
@@ -36,17 +37,17 @@ from liveness import TIMESTAMP_PATH
 LOGGER = logging.getLogger(__name__)
 
 
-class Timestamp(object):
-    def __init__(self, path=TIMESTAMP_PATH, when=None):
-        '''
-        Creates a new timestamp representation to <path>; on initialization,
-        this timestamp is written to disk in a persistent fashion.
+class Timestamp:
+    """
+    A timestamp representation to <path>; on initialization,
+    this timestamp is written to disk in a persistent fashion.
 
-        Newly initialized timestamps with a path reference to an existing file
-        overwrites the file in question.
-        '''
+    Newly-initialized timestamps with a path reference to an existing file
+    overwrites the file in question.
+    """
+    def __init__(self, path=TIMESTAMP_PATH, when=None):
         self.path = path
-        with open(self.path, 'w') as timestamp_file:
+        with open(self.path, 'w', encoding='utf-8') as timestamp_file:
             if not when:
                 # how?
                 timestamp_file.write(str(datetime.now().timestamp()))
@@ -54,7 +55,8 @@ class Timestamp(object):
                 timestamp_file.write(str(when.timestamp()))
 
     def __str__(self):
-        return 'Timestamp from %s; age: %s' % (self.value.strftime("%m/%d/%Y, %H:%M:%S"), self.age)
+        timestamp_str = self.value.strftime("%m/%d/%Y, %H:%M:%S")
+        return f'Timestamp from {timestamp_str}; age: {self.age}'
 
     @classmethod
     def byref(cls, path):
@@ -74,10 +76,10 @@ class Timestamp(object):
         the value; instead it reads it each time the property is accessed.
         """
         try:
-            with open(self.path, 'r') as timestamp_file:
+            with open(self.path, 'r', encoding='utf-8') as timestamp_file:
                 return datetime.fromtimestamp(float(timestamp_file.read().strip()))
         except FileNotFoundError:
-            LOGGER.warning("Timestamp never initialized to '%s'" % (self.path))
+            LOGGER.warning("Timestamp never initialized to '%s'", self.path)
             return datetime.fromtimestamp(0)
         except ValueError:
             # CASMCMS-6856: There is an edgecase where backgrounded writes of a timestamp

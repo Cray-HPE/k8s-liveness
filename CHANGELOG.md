@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Updated `Makefile` to allow `pycodestyle` and `pylint` to run.
+- Addressed `pylint` complaints (no functional changes)
 
 ### Removed
 - Removed defunct files leftover from previous versioning system
