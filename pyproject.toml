@@ -33,7 +33,6 @@ authors = [{name="HPE Development LP", email="sps@cray.com"}]
 description = "Simple liveness checks for Python-based apps running in Kubernetes"
 keywords = ["Cray"]
 classifiers = [
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
