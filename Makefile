@@ -39,7 +39,7 @@ pymod_prepare:
 		pip3 install --upgrade pip setuptools wheel --no-cache
 
 pymod_build:
-		python3 install . -c constraints.txt --disable-pip-version-check --no-cache --user
+		pip3 install . -c constraints.txt --disable-pip-version-check --no-cache --user
 
 pymod_test:
 		pip3 install -r requirements.txt --disable-pip-version-check --no-cache --user
