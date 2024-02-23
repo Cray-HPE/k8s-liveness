@@ -1,5 +1,6 @@
 /.project
 /.pydevproject
+/.python-version
 dist/*
 *.egg-info
 *__pycache__
