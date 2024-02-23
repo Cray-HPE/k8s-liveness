@@ -36,15 +36,15 @@ lint:
 		./cms_meta_tools/scripts/runLint.sh
 
 pymod_prepare:
-		pip3 install --upgrade pip setuptools wheel --no-cache
+		pip3.9 install --upgrade pip setuptools wheel --no-cache
 
 pymod_build:
-		pip3 install . -c constraints.txt --disable-pip-version-check --no-cache --user
+		pip3.9 install . -c constraints.txt --disable-pip-version-check --no-cache --user
 
 pymod_test:
-		pip3 install -r requirements.txt --disable-pip-version-check --no-cache --user
-		pip3 install -r requirements-test.txt --disable-pip-version-check --no-cache --user
+		pip3.9 install -r requirements.txt --disable-pip-version-check --no-cache
+		pip3.9 install -r requirements-test.txt --disable-pip-version-check --no-cache
 		mkdir -p pymod_test
-		python3 tests/test_liveness.py
-		python3 -m pycodestyle --config=.pycodestyle ./src/liveness || true
-		python3 -m pylint ./src/liveness || true
+		python3.9 tests/test_liveness.py
+		python3.9 -m pycodestyle --config=.pycodestyle ./src/liveness || true
+		python3.9 -m pylint ./src/liveness || true
