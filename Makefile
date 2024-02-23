@@ -42,7 +42,6 @@ pymod_build:
 		pip3.9 install . -c constraints.txt --disable-pip-version-check --no-cache --user
 
 pymod_test:
-		pip3.9 install -r requirements.txt --disable-pip-version-check --no-cache
 		pip3.9 install -r requirements-test.txt --disable-pip-version-check --no-cache
 		mkdir -p pymod_test
 		python3.9 tests/test_liveness.py

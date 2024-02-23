@@ -1,4 +1,0 @@
-# Only use Cray-procured packages
---index-url https://arti.hpc.amslabls.hpecorp.net:443/artifactory/api/pypi/pypi-remote/simple
--c constraints.txt
--e .
