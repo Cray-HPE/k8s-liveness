@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2019-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2019-2022, 2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -36,16 +36,18 @@ lint:
 		./cms_meta_tools/scripts/runLint.sh
 
 pymod_prepare:
-		pip3 install --upgrade pip setuptools wheel
+		python3 --version
+		python3 -m pip install --upgrade pip --user -c constraints.txt
+		python3 -m pip install --upgrade setuptools build wheel --user -c constraints.txt
 
 pymod_build:
-		python3 setup.py sdist bdist_wheel
+		python3 -m build --sdist
+		python3 -m build --wheel
 
 pymod_test:
-		pip3 install -r requirements.txt
-		pip3 install -r requirements-test.txt
-		mkdir -p pymod_test
-		python3 setup.py install --user
+		python3 -m pip install -r requirements.txt --user --no-warn-script-location
+		python3 -m pip install -r requirements-test.txt --user --no-warn-script-location
+		python3 -m pip install dist/*.whl --user -c constraints.txt
 		python3 tests/test_liveness.py
-		pycodestyle --config=.pycodestyle ./src/liveness || true
-		pylint ./src/liveness || true
+		python3 -m pycodestyle --config=.pycodestyle ./src/liveness || true
+		python3 -m pylint ./src/liveness || true

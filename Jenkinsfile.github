@@ -26,6 +26,8 @@
 @Library('cms-meta-tools') _
 @Library('csm-shared-library') __
 
+def pyImage = 'artifactory.algol60.net/csm-docker/stable/csm-docker-sle-python'
+
 pipeline {
     agent {
         label "metal-gcp-builder"
@@ -69,19 +71,20 @@ pipeline {
         stage("Lint") {
             steps { sh "make lint" }
         }
-         
-        stage('Prepare for Build') {
-            steps { sh "make pymod_prepare" }
+
+        stage("Build Python Module") {
+            agent {
+                docker {
+                    args "-v /home/jenkins/.ssh:/home/jenkins/.ssh -v /home/jenkins/.netrc:/home/jenkins/.netrc"
+                    reuseNode true
+                    image "${pyImage}:3.6"
+                }
+            }
+            steps {
+                sh "make pymod"
+            }
         }
 
-        stage('Build Package') {
-            steps { sh "make pymod_build" }
-        }
-
-        stage('Unit Tests') {
-            steps { sh "make pymod_test" }
-        }
-        
         stage('Publish') {
             steps {
                 publishCsmPythonModules(module: env.PYMOD_NAME, isStable: env.IS_STABLE)
