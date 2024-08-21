@@ -30,7 +30,7 @@ License: MIT
 Summary: Cray Kubernetes liveness Python package for Python %{py_version}
 Group: System/Management
 Version: %(cat .version)
-Release: %(echo ${BUILD_METADATA})
+Release: %(cat .rpm_release)
 Source: %{name}-%{version}.tar.bz2
 BuildArch: %(echo ${RPM_ARCH})
 Vendor: Cray Inc.
