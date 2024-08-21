@@ -2,7 +2,7 @@
  *
  *  MIT License
  *
- *  (C) Copyright 2021-2023 Hewlett Packard Enterprise Development LP
+ *  (C) Copyright 2021-2024 Hewlett Packard Enterprise Development LP
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -28,6 +28,16 @@
 
 def pyImage = 'artifactory.algol60.net/csm-docker/stable/csm-docker-sle-python'
 
+def getRpmName(packageName, pythonVersion) {
+    if (pythonVersion == "3.6") {
+        return "python3-${packageName}"
+    }
+    def pythonVersionParts = pythonVersion.tokenize('.')
+    def pyMajor = "${pythonVersionParts[0]}"
+    def pyMinor = "${pythonVersionParts[1]}"
+    return "python${pyMajor}${pyMinor}-${packageName}"
+}
+
 pipeline {
     agent {
         label "metal-gcp-builder"
@@ -43,6 +53,11 @@ pipeline {
         PYMOD_NAME = "liveness"
         DESCRIPTION = "Library for creating and referencing timestamps to determine if a piece of code is running or not, from a k8s perspective"
         IS_STABLE = getBuildIsStable()
+        RPM_ARCH = "noarch"
+        RPM_OS = "noos"
+        PY_VERSION = "3.6"
+        BUILD_RELDIR = "dist/rpmbuild/${env.RPM_ARCH}/${env.PY_VERSION}"
+        RPM_NAME = getRpmName(env.PYMOD_NAME, env.PY_VERSION)
     }
 
     stages {
@@ -72,22 +87,63 @@ pipeline {
             steps { sh "make lint" }
         }
 
-        stage("Build Python Module") {
+        stage("Build") {
             agent {
                 docker {
                     args "-v /home/jenkins/.ssh:/home/jenkins/.ssh -v /home/jenkins/.netrc:/home/jenkins/.netrc"
                     reuseNode true
-                    image "${pyImage}:3.6"
+                    image "${pyImage}:${env.PY_VERSION}"
                 }
             }
-            steps {
-                sh "make pymod"
+            stages {
+                stage("Build Python Package") {
+                    steps { sh "make pymod" }
+                }
+
+                stage("Add build metadata to RPM spec file") {
+                    environment {
+                        BUILD_METADATA = getRpmRevision(isStable: env.IS_STABLE)
+                    }
+                    steps {
+                        echo "RPM build metadata is ${env.BUILD_METADATA}"
+                        runLibraryScript("addRpmMetaData.sh", "${env.WORKSPACE}/${env.NAME}.spec")
+                    }
+                }
+
+                stage("Build RPM") {
+                    environment {
+                        BUILD_DIR = "${env.WORKSPACE}/${env.BUILD_RELDIR}"
+                    }
+                    steps { sh "make rpm" }
+                }
             }
         }
 
         stage('Publish') {
-            steps {
-                publishCsmPythonModules(module: env.PYMOD_NAME, isStable: env.IS_STABLE)
+            parallel {
+                stage('Publish RPMs') {
+                    steps {
+                        publishCsmRpms(
+                            arch: env.RPM_ARCH,
+                            isStable: env.IS_STABLE,
+                            component: env.RPM_NAME,
+                            os: env.RPM_OS,
+                            pattern: "${env.BUILD_RELDIR}/RPMS/${env.RPM_ARCH}/*.rpm",
+                        )
+                        publishCsmRpms(
+                            arch: "src",
+                            component: env.RPM_NAME,
+                            isStable: env.IS_STABLE,
+                            os: env.RPM_OS,
+                            pattern: "${env.BUILD_RELDIR}/SRPMS/*.rpm",
+                        )
+                    }
+                }
+                stage ('Publish Python package') {
+                    steps {
+                        publishCsmPythonModules(module: env.PYMOD_NAME, isStable: env.IS_STABLE)
+                    }
+                }
             }
         }
     }

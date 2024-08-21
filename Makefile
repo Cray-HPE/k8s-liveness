@@ -25,9 +25,21 @@
 # cms-meta-tools repo to ./cms_meta_tools
 
 NAME ?= cray-k8s-liveness
+PYMOD_NAME ?= liveness
+RPM_VERSION ?= $(shell head -1 .version)
+RPM_NAME ?= python3-${PYMOD_NAME}
+
+SPEC_FILE ?= ${NAME}.spec
+BUILD_METADATA ?= "1~development~$(shell git rev-parse --short HEAD)"
+SOURCE_NAME ?= ${RPM_NAME}-${RPM_VERSION}
+SOURCE_BASENAME := ${SOURCE_NAME}.tar.bz2
+BUILD_DIR ?= $(PWD)/dist/rpmbuild
+SOURCE_PATH := ${BUILD_DIR}/SOURCES/${SOURCE_BASENAME}
+PYTHON_BIN := python$(PY_VERSION)
 
 all : runbuildprep lint pymod
 pymod: pymod_prepare pymod_build pymod_test
+rpm: rpm_prepare rpm_package_source rpm_build_source rpm_build
 
 runbuildprep:
 		./cms_meta_tools/scripts/runBuildPrep.sh
@@ -51,3 +63,26 @@ pymod_test:
 		python3 tests/test_liveness.py
 		python3 -m pycodestyle --config=.pycodestyle ./src/liveness || true
 		python3 -m pylint ./src/liveness || true
+
+rpm_prepare:
+		rm -rf $(BUILD_DIR)
+		mkdir -p $(BUILD_DIR)/SPECS $(BUILD_DIR)/SOURCES
+		cp $(SPEC_FILE) $(BUILD_DIR)/SPECS/
+
+rpm_package_source:
+		touch $(SOURCE_PATH)
+		tar --transform 'flags=r;s,^,/$(SOURCE_NAME)/,' \
+			--exclude .git \
+			--exclude liveness.egg-info \
+			--exclude .github \
+			--exclude ./cms_meta_tools \
+			--exclude ./build \
+			--exclude ./dist/rpmbuild \
+			--exclude $(SOURCE_BASENAME) \
+			-cvjf $(SOURCE_PATH) .
+
+rpm_build_source:
+		RPM_NAME=$(RPM_NAME) PYTHON_BIN=$(PYTHON_BIN) BUILD_METADATA=$(BUILD_METADATA) rpmbuild -bs $(SPEC_FILE) --target $(RPM_ARCH) --define "_topdir $(BUILD_DIR)"
+
+rpm_build:
+		RPM_NAME=$(RPM_NAME) PYTHON_BIN=$(PYTHON_BIN) BUILD_METADATA=$(BUILD_METADATA) rpmbuild -ba $(SPEC_FILE) --target $(RPM_ARCH) --define "_topdir $(BUILD_DIR)"
