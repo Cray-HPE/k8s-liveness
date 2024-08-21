@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Spelling corrections.
 - Disabled concurrent Jenkins builds on same branch/commit
 - Added build timeout to avoid hung builds
+- Added `MANIFEST.in` file to make Python source distribution installable
 
 ### Removed
 - Removed defunct files leftover from previous versioning system

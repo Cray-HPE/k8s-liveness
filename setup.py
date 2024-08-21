@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2022, 2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -40,9 +40,6 @@ setuptools.setup(
     package_data = {'': ['.version']},
     include_package_data=True,
     packages=['liveness'],
-    install_requires=[
-      'liveness',
-    ],
     author="Hewlett Packard Enterprise Development LP",
     author_email="help@hpe.com",
     description="Simple liveness checks for Python-based apps running in Kubernetes",
