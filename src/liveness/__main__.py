@@ -2,7 +2,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2022, 2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -64,7 +64,7 @@ LOGGER = logging.getLogger('liveness.main')
 DEFAULT_LOG_LEVEL = logging.INFO
 
 
-def setup_logging():
+def setup_logging() -> None:
     log_format = "%(asctime)-15s - %(levelname)-7s - %(name)s - %(message)s"
     requested_log_level = os.environ.get('LOG_LEVEL', DEFAULT_LOG_LEVEL)
     log_level = logging.getLevelName(requested_log_level)

@@ -36,6 +36,7 @@ with open(".version", "r") as fh:
 setuptools.setup(
     name="liveness",
     version=version_str,
+    package_data = {'liveness': ['py.typed']},
     package_dir = {'liveness': 'src/liveness'},
     packages=['liveness'],
     author="Hewlett Packard Enterprise Development LP",

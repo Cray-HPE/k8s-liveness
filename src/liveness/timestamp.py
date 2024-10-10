@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP
+# (C) Copyright 2020-2022, 2024 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -29,6 +29,7 @@ Created on April 27, 2020
 '''
 import logging
 from datetime import datetime, timedelta
+from typing import Optional
 
 from liveness import TIMESTAMP_PATH
 
@@ -36,8 +37,8 @@ from liveness import TIMESTAMP_PATH
 LOGGER = logging.getLogger(__name__)
 
 
-class Timestamp(object):
-    def __init__(self, path=TIMESTAMP_PATH, when=None):
+class Timestamp:
+    def __init__(self, path: str = TIMESTAMP_PATH, when: Optional[datetime] = None):
         '''
         Creates a new timestamp representation to <path>; on initialization,
         this timestamp is written to disk in a persistent fashion.
@@ -53,11 +54,12 @@ class Timestamp(object):
             else:
                 timestamp_file.write(str(when.timestamp()))
 
-    def __str__(self):
+    def __str__(self) -> str:
         return 'Timestamp from %s; age: %s' % (self.value.strftime("%m/%d/%Y, %H:%M:%S"), self.age)
 
+    # PEP 484: For Python 3.6 compatability, use string for forward reference type annotation
     @classmethod
-    def byref(cls, path):
+    def byref(cls, path: str) -> "Timestamp":
         """
         Creates a new instance of a Timestamp without initializing it to disk.
         This is useful if you simply want to check the existence of a timestamp
@@ -68,7 +70,7 @@ class Timestamp(object):
         return self
 
     @property
-    def value(self):
+    def value(self) -> datetime:
         """
         The timestamp value, as stored on disk. This property does not cache
         the value; instead it reads it each time the property is accessed.
@@ -89,14 +91,14 @@ class Timestamp(object):
             return datetime.fromtimestamp(0)
 
     @property
-    def age(self):
+    def age(self) -> timedelta:
         """
         How old this timestamp is, implemented as a timedelta object.
         """
         return datetime.now() - self.value
 
     @property
-    def max_age(self):
+    def max_age(self) -> timedelta:
         """
         The maximum amount of time that can elapse before we consider the timestamp
         as invalid.
@@ -107,7 +109,7 @@ class Timestamp(object):
         return computation_time
 
     @property
-    def alive(self):
+    def alive(self) -> bool:
         """
         Returns a true or false, depending on if this service is considered alive/viable.
         True if the service has a new enough timestamp; false otherwise.

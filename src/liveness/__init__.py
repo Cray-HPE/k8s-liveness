@@ -24,6 +24,6 @@
 import os
 
 WORKING_DIRECTORY = '/tmp/'
-TIMESTAMP_PATH = os.path.join(WORKING_DIRECTORY, 'timestamp')
+TIMESTAMP_PATH: str = os.path.join(WORKING_DIRECTORY, 'timestamp')
 
 os.makedirs(WORKING_DIRECTORY, exist_ok=True)

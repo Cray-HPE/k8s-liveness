@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added type hints and `py.typed`
+
 ## [1.4.3] - 2024-08-21
 ### Changed
 - Change how RPM release value is set
