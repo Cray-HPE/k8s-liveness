@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Dependencies
+- Bump `tj-actions/changed-files` from 45 to 46 ([#30](https://github.com/Cray-HPE/k8s-liveness/pull/30))
+
 ## [1.4.4] - 2024-10-10
 ### Added
 - Added type hints and `py.typed`
