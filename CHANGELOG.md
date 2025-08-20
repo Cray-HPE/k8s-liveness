@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Dependencies
-
+- Bump `dangoslen/dependabot-changelog-helper` from 3 to 4 ([#29](https://github.com/Cray-HPE/k8s-liveness/pull/29))
+- Bump `actions/checkout` from 4 to 5 ([#32](https://github.com/Cray-HPE/k8s-liveness/pull/32))
 - Bump `dangoslen/dependabot-changelog-helper` from 3 to 4 ([#29](https://github.com/Cray-HPE/k8s-liveness/pull/29))
 
 ## [1.4.4] - 2024-10-10
